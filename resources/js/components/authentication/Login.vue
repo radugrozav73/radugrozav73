@@ -135,8 +135,8 @@ input:-webkit-autofill:active
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 }
 
-@media only screen and (max-width:450px){
-    .wrapper{
+@media only screen and (max-width:500px){
+    .wrappper{
         width:300px;
     }
 }

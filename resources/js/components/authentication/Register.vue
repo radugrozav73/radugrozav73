@@ -179,7 +179,7 @@ input:-webkit-autofill:active
 }
 
 @media only screen and (max-width:450px){
-    .wrapper{
+    .wrappper{
         width:300px;
     }
 }
