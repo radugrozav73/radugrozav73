@@ -21,10 +21,12 @@ const state = {
     afterLogOutNotification:false,
     serverRequeestError:false,
     logORRegError:false,
+    userName:'',
 };
 
 const getters = {
     getLogORRegError : state => state.logORRegError,
+    getUserName: state => state.userName,
     getServerRequeestError: state => state.serverRequeestError,
     getAfterLogOutNotification: state => state.afterLogOutNotification,
     getAfterLoginNotification: state => state.afterLoginNotification,
@@ -68,7 +70,7 @@ const actions = {
     },
     attempt({state}){
         state.isLogged === true  ? '' : state.isLogged = false;
-        console.log('am intrat in attempt');
+
         return new Promise((resolve, reject) => {
             axios.get('/api/informations/me?page=1',
             {
@@ -79,6 +81,7 @@ const actions = {
                 state.questiosFromDB = [];
                 state.isLogged = true;
                 state.nrOfPAgins = res.data.count;
+                state.userName = res.data.name;
                 res.data.posts.data.map( el => state.questiosFromDB.push({el:el, copied:false}));
                 Math.ceil(res.data.count / 6) <= state.pagin ? state.disableNext = true : state.disableNext = false;
                 Math.ceil(res.data.count / 6) >= state.pagin ? state.disableBack = true : state.disableBack = false;
@@ -157,7 +160,8 @@ const actions = {
                     setTimeout(() => {
                         state.afterLoginNotification = false;
                     }, 3000);
-                    localStorage.setItem("token", res.data.token)
+                    localStorage.setItem("token", res.data.token);
+                    state.userName = res.data.name;
                     state.logRegSpinner = false;
                     state.isLogged = true;
                     console.log(res.status);

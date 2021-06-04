@@ -18,6 +18,7 @@ class AuthController extends Controller
 
         return response([
             'token'=>$token,
+            'name' => $request->user()->name,
             'surveys'=>$request->user()->surveys()->select('title', 'about', 'survey_key', 'list_of_questions')->get(),
         ]
             ,201);

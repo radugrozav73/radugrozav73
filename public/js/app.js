@@ -3370,6 +3370,11 @@ __webpack_require__.r(__webpack_exports__);
     Spinner: _spinner_Spinner__WEBPACK_IMPORTED_MODULE_0__.default
   },
   computed: {
+    getUserName: function getUserName() {
+      return this.$store.getters.getUserName.split(' ').map(function (el, index, map) {
+        return el.charAt(0).toUpperCase() + el.slice(1);
+      }).join(' ');
+    },
     isLogged: function isLogged() {
       return this.$store.getters.getIsLogged;
     },
@@ -3401,6 +3406,9 @@ __webpack_require__.r(__webpack_exports__);
     closeMenu: function closeMenu() {
       this.hiddenMenu = false;
     }
+  },
+  mounted: function mounted() {
+    console.log(this.getUserName);
   }
 });
 
@@ -3585,11 +3593,15 @@ var state = {
   afterLoginNotification: false,
   afterLogOutNotification: false,
   serverRequeestError: false,
-  logORRegError: false
+  logORRegError: false,
+  userName: ''
 };
 var getters = {
   getLogORRegError: function getLogORRegError(state) {
     return state.logORRegError;
+  },
+  getUserName: function getUserName(state) {
+    return state.userName;
   },
   getServerRequeestError: function getServerRequeestError(state) {
     return state.serverRequeestError;
@@ -3661,7 +3673,6 @@ var actions = {
   attempt: function attempt(_ref2) {
     var state = _ref2.state;
     state.isLogged === true ? '' : state.isLogged = false;
-    console.log('am intrat in attempt');
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/informations/me?page=1', {
         headers: {
@@ -3671,6 +3682,7 @@ var actions = {
         state.questiosFromDB = [];
         state.isLogged = true;
         state.nrOfPAgins = res.data.count;
+        state.userName = res.data.name;
         res.data.posts.data.map(function (el) {
           return state.questiosFromDB.push({
             el: el,
@@ -3774,6 +3786,7 @@ var actions = {
           state.afterLoginNotification = false;
         }, 3000);
         localStorage.setItem("token", res.data.token);
+        state.userName = res.data.name;
         state.logRegSpinner = false;
         state.isLogged = true;
         console.log(res.status);
@@ -4271,7 +4284,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.routeLinksStyling[data-v-04f241bc]{\r\n    display: flex;\r\n    justify-content: flex-start;\r\n    width:100%;\r\n    align-items: center;\n}\n.spaceWelcomeTagAndName[data-v-04f241bc]{\r\n    margin-left:10px;\n}\n.spaceGoodByeTagAndName[data-v-04f241bc]{\n}\n.isLoggedIn[data-v-04f241bc]{\r\n    color:#488b8f;\r\n    width:350px;\r\n    text-align: center;\n}\n.hideWelcome[data-v-04f241bc]{\r\n    position: absolute;\r\n    top:110px;\r\n    left:50%;\r\n    transform: translate(-50%);\r\n    height:40px;\r\n    width:200px;\r\n    background-color: #b0eacd;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    color:White;\r\n    border-radius: 6px;\r\n    opacity: 0;\r\n    transition: .3 ease;\n}\n.welcomeModal[data-v-04f241bc]{\r\n    position: absolute;\r\n    top:130px;\r\n    left:50%;\r\n    transform: translate(-50%);\r\n    height:40px;\r\n    width:200px;\r\n    background-color: #b0eacd;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    color:White;\r\n    border-radius: 6px;\r\n    opacity: 1;\r\n    transition: .3 ease;\n}\n.hideIt[data-v-04f241bc]{\r\n    transform: translateX(-100%);\r\n    transition: .3s ease;\r\n    height:100vh;\r\n    width:100%;\r\n    top:0;\r\n    left:0;\r\n    background-color:#ffffff;\r\n    position: fixed;\r\n    z-index: 100;\r\n    transition: .3s ease;\n}\n.hiddenMenu[data-v-04f241bc]{\r\n    height:100vh;\r\n    width:100%;\r\n    top:0;\r\n    left:0;\r\n    background-color:#ffffff;\r\n    position: fixed;\r\n    z-index: 100;\r\n    transform: translateX(0);\r\n    transition: .3s ease;\n}\n.listInHiddenMenu[data-v-04f241bc]{\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    flex-direction: column;\r\n    height:80%;\n}\n.listInHiddenMenu>p[data-v-04f241bc]{\r\n    margin:0;\n}\n.navbarHidden[data-v-04f241bc]{\r\n    display: none;\n}\n.hiddenMenuButton[data-v-04f241bc]{\r\n    position: fixed;\r\n    z-index: 150;\r\n    top:0;\n}\nul[data-v-04f241bc]{\r\n    position: absolute;\r\n    left:30px;\r\n    width: 40px;  height: 40px;\r\n    border-radius: 20px;\r\n    overflow: hidden;\r\n    cursor: pointer;\n}\nul li[data-v-04f241bc]{\r\n    list-style: none;\r\n    position: absolute;\r\n    transform: translateY(-50%);\r\n    width: 70%;  height: 10px;\r\n    background: #fb9300;\r\n    transition: 1s;\n}\nul li[data-v-04f241bc]:nth-of-type(1){\r\n    top: 30%;  left: 15%; \r\n    transition-delay: 1s; \r\n    opacity: 1;\n}\nul li[data-v-04f241bc]:nth-of-type(2){\r\n    top: 50%;  left: 15%; \r\n    transition-delay: 0s;\n}\nul li[data-v-04f241bc]:nth-of-type(3){\r\n    top: 70%;  right: 15%;\r\n    transition-delay: 1s; \r\n    opacity: 1;\n}\nul.active li[data-v-04f241bc]:nth-of-type(1){\r\n    left: 100%;\r\n    transition-delay: 0s;\r\n    opacity: 0;\n}\nul.active li[data-v-04f241bc]:nth-of-type(2){\r\n    transform: translateY(-50%) rotate(405deg);\r\n    transition-delay: .5s;\n}\nul.active li[data-v-04f241bc]:nth-of-type(3){\r\n    right: 100%;\r\n    transition-delay: 0s;\r\n    opacity: 0;\n}\nul li[data-v-04f241bc]:nth-of-type(2)::before{\r\n    content: '';\r\n    position: absolute;\r\n    top: -150px;  left: 0;\r\n    width: 100%;  height: 100%;\r\n    background: #f54748;\r\n    transform: rotate(90deg);\r\n    transition: 1s;\r\n    transition-delay: .5s;\n}\nul.active li[data-v-04f241bc]:nth-of-type(2)::before{\r\n    top: 0; \r\n    transition-delay: 1s;\n}\na[data-v-04f241bc] {\r\n    display: inline-block;\r\n    padding: 15px 20px;\r\n    position: relative;\r\n    color:#52616b;\n}\na[data-v-04f241bc]:after{\r\n    background: none repeat scroll 0 0 transparent;\r\n    bottom: 0;\r\n    content: \"\";\r\n    display: block;\r\n    height: 2px;\r\n    left: 50%;\r\n    position: absolute;\r\n    background: #fb9300;\r\n    transition: width 0.3s ease 0s, left 0.3s ease 0s;\r\n    cursor: pointer;\r\n    width: 0;\n}\na[data-v-04f241bc]:hover:after { \r\n    width: 100%; \r\n    left: 0;\n}\n.loginLogoutPointer[data-v-04f241bc]{\r\n    cursor: pointer;\n}\n.isLoggedInOrOut[data-v-04f241bc]{\r\n    display: flex;\r\n    justify-content: space-evenly;\n}\n.name[data-v-04f241bc]{\r\n    padding:15px 20px;\r\n    position: relative;\r\n    color:#52616b;\n}\n.logout[data-v-04f241bc]{\r\n    padding:15px 20px;\r\n    color:#52616b;\r\n    position: relative;\n}\n.logout[data-v-04f241bc]:after{\r\n    background: none repeat scroll 0 0 transparent;\r\n    bottom: 0;\r\n    content: \"\";\r\n    display: block;\r\n    height: 2px;\r\n    left: 50%;\r\n    position: absolute;\r\n    background: #fb9300;\r\n    transition: width 0.3s ease 0s, left 0.3s ease 0s;\r\n    cursor: pointer;\r\n    width: 0;\n}\n.logout[data-v-04f241bc]:hover:after { \r\n    width: 100%; \r\n    left: 0;\n}\n.lista[data-v-04f241bc]{\r\n    width:800px;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\n}\n.navbar[data-v-04f241bc]{\r\n    width:100%;\r\n    height:70px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    position: fixed;\r\n    top:0;\r\n    z-index: 140;\r\n    background-color: #ffffff;\r\n    box-shadow: 0 4px 31px 0 #ab98ab;\n}\n.fade-enter-active[data-v-04f241bc], .fade-leave-active[data-v-04f241bc] {\r\n    transition: opacity .2s;\r\n    background:transparent;\n}\n.fade-enter[data-v-04f241bc], .fade-leave-to[data-v-04f241bc] /* .fade-leave-active below version 2.1.8 */ {\r\n    opacity: 0;\r\n    background:transparent;\n}\n@media only screen and (max-width:1300px) {\n.lista[data-v-04f241bc]{\r\n        width:70%;\n}\n}\n@media only screen and (max-width:900px) {\n.lista[data-v-04f241bc]{\r\n        width:100%;\n}\n}\n@media only screen and (max-width:650px) {\n.lista[data-v-04f241bc]{\r\n        width:100%;\n}\n.hideLinks[data-v-04f241bc]{\r\n        display: none;\n}\n.navbarHidden[data-v-04f241bc]{\r\n        display: initial;\r\n        position: fixed;\r\n        z-index: 150;\n}\n}\n@media only screen and (min-width:650px) {\n.navbarHidden[data-v-04f241bc]{\r\n        display: none;\n}\n.hiddenMenu[data-v-04f241bc]{\r\n        display: none;\n}\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.enoughSpaceForName[data-v-04f241bc]{\r\n    width:400px;\n}\n.routeLinksStyling[data-v-04f241bc]{\r\n    display: flex;\r\n    justify-content: flex-start;\r\n    width:100%;\r\n    align-items: center;\r\n    margin-left: 10%;\n}\n.spaceWelcomeTagAndName[data-v-04f241bc]{\r\n    margin-left:10px;\n}\n.isLoggedIn[data-v-04f241bc]{\r\n    color:#488b8f;\r\n    width:350px;\r\n    text-align: center;\r\n    margin-right:100px;\n}\n.welcomeTag[data-v-04f241bc]{\r\n    font-size:.8rem;\r\n    margin-right:100px;\n}\n.hideWelcome[data-v-04f241bc]{\r\n    position: absolute;\r\n    top:110px;\r\n    left:50%;\r\n    transform: translate(-50%);\r\n    height:40px;\r\n    width:200px;\r\n    background-color: #b0eacd;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    color:White;\r\n    border-radius: 6px;\r\n    opacity: 0;\r\n    transition: .3 ease;\n}\n.welcomeModal[data-v-04f241bc]{\r\n    position: absolute;\r\n    top:130px;\r\n    left:50%;\r\n    transform: translate(-50%);\r\n    height:40px;\r\n    width:200px;\r\n    background-color: #b0eacd;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    color:White;\r\n    border-radius: 6px;\r\n    opacity: 1;\r\n    transition: .3 ease;\n}\n.hideIt[data-v-04f241bc]{\r\n    transform: translateX(-100%);\r\n    transition: .3s ease;\r\n    height:100vh;\r\n    width:100%;\r\n    top:0;\r\n    left:0;\r\n    background-color:#ffffff;\r\n    position: fixed;\r\n    z-index: 100;\r\n    transition: .3s ease;\n}\n.hiddenMenu[data-v-04f241bc]{\r\n    height:100vh;\r\n    width:100%;\r\n    top:0;\r\n    left:0;\r\n    background-color:#ffffff;\r\n    position: fixed;\r\n    z-index: 100;\r\n    transform: translateX(0);\r\n    transition: .3s ease;\n}\n.listInHiddenMenu[data-v-04f241bc]{\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    flex-direction: column;\r\n    height:80%;\n}\n.listInHiddenMenu>p[data-v-04f241bc]{\r\n    margin:0;\n}\n.navbarHidden[data-v-04f241bc]{\r\n    display: none;\n}\n.hiddenMenuButton[data-v-04f241bc]{\r\n    position: fixed;\r\n    z-index: 150;\r\n    top:0;\n}\nul[data-v-04f241bc]{\r\n    position: relative;\r\n    left:30px;\r\n    width: 40px;  height: 40px;\r\n    border-radius: 20px;\r\n    overflow: hidden;\r\n    cursor: pointer;\n}\nul li[data-v-04f241bc]{\r\n    list-style: none;\r\n    position: absolute;\r\n    transform: translateY(-50%);\r\n    width: 70%;  height: 10px;\r\n    background: #fb9300;\r\n    transition: 1s;\n}\nul li[data-v-04f241bc]:nth-of-type(1){\r\n    top: 30%;  left: 15%; \r\n    transition-delay: 1s; \r\n    opacity: 1;\n}\nul li[data-v-04f241bc]:nth-of-type(2){\r\n    top: 50%;  left: 15%; \r\n    transition-delay: 0s;\n}\nul li[data-v-04f241bc]:nth-of-type(3){\r\n    top: 70%;  right: 15%;\r\n    transition-delay: 1s; \r\n    opacity: 1;\n}\nul.active li[data-v-04f241bc]:nth-of-type(1){\r\n    left: 100%;\r\n    transition-delay: 0s;\r\n    opacity: 0;\n}\nul.active li[data-v-04f241bc]:nth-of-type(2){\r\n    transform: translateY(-50%) rotate(405deg);\r\n    transition-delay: .5s;\n}\nul.active li[data-v-04f241bc]:nth-of-type(3){\r\n    right: 100%;\r\n    transition-delay: 0s;\r\n    opacity: 0;\n}\nul li[data-v-04f241bc]:nth-of-type(2)::before{\r\n    content: '';\r\n    position: absolute;\r\n    top: -150px;  left: 0;\r\n    width: 100%;  height: 100%;\r\n    background: #f54748;\r\n    transform: rotate(90deg);\r\n    transition: 1s;\r\n    transition-delay: .5s;\n}\nul.active li[data-v-04f241bc]:nth-of-type(2)::before{\r\n    top: 0; \r\n    transition-delay: 1s;\n}\na[data-v-04f241bc] {\r\n    display: inline-block;\r\n    padding: 15px 20px;\r\n    position: relative;\r\n    color:#52616b;\n}\n.isLoggedIn>p[data-v-04f241bc] {\r\n    display: inline-block;\r\n    padding: 15px 0;\r\n    position: relative;\r\n    color:#52616b;\n}\n.isLoggedIn[data-v-04f241bc]{\r\n    margin-right: 110px;\n}\na[data-v-04f241bc]:after{\r\n    background: none repeat scroll 0 0 transparent;\r\n    bottom: 0;\r\n    content: \"\";\r\n    display: block;\r\n    height: 2px;\r\n    left: 50%;\r\n    position: absolute;\r\n    background: #fb9300;\r\n    transition: width 0.3s ease 0s, left 0.3s ease 0s;\r\n    cursor: pointer;\r\n    width: 0;\n}\na[data-v-04f241bc]:hover:after { \r\n    width: 100%; \r\n    left: 0;\n}\n.loginLogoutPointer[data-v-04f241bc]{\r\n    cursor: pointer;\n}\n.isLoggedInOrOut[data-v-04f241bc]{\r\n    display: flex;\r\n    justify-content: space-evenly;\n}\n.name[data-v-04f241bc]{\r\n    padding:15px 0;\r\n    position: relative;\r\n    color:#52616b;\r\n    max-width:200px;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n    overflow: hidden;\n}\n.logout[data-v-04f241bc]{\r\n    padding:15px 20px;\r\n    color:#52616b;\r\n    position: relative;\n}\n.logout[data-v-04f241bc]:after{\r\n    background: none repeat scroll 0 0 transparent;\r\n    bottom: 0;\r\n    content: \"\";\r\n    display: block;\r\n    height: 2px;\r\n    left: 50%;\r\n    position: absolute;\r\n    background: #fb9300;\r\n    transition: width 0.3s ease 0s, left 0.3s ease 0s;\r\n    cursor: pointer;\r\n    width: 0;\n}\n.logout[data-v-04f241bc]:hover:after { \r\n    width: 100%; \r\n    left: 0;\n}\n.lista[data-v-04f241bc]{\r\n    width:100%;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\n}\n.navbar[data-v-04f241bc]{\r\n    width:100%;\r\n    height:70px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    position: fixed;\r\n    top:0;\r\n    z-index: 140;\r\n    background-color: #ffffff;\r\n    box-shadow: 0 4px 31px 0 #ab98ab;\n}\n.fade-enter-active[data-v-04f241bc], .fade-leave-active[data-v-04f241bc] {\r\n    transition: opacity .2s;\r\n    background:transparent;\n}\n.fade-enter[data-v-04f241bc], .fade-leave-to[data-v-04f241bc] /* .fade-leave-active below version 2.1.8 */ {\r\n    opacity: 0;\r\n    background:transparent;\n}\n@media only screen and (max-width:1100px){\n.isLoggedIn[data-v-04f241bc]{\r\n        margin-right: 0;\n}\n.routeLinksStyling[data-v-04f241bc]{\r\n        margin-left: 30px;\n}\n}\n@media only screen and (max-width:900px) {\np>.hideLinks[data-v-04f241bc]{\r\n        padding:15px 10px;\n}\n}\n@media only screen and (max-width:690px) {\n.lista[data-v-04f241bc]{\r\n        width:100%;\n}\n.hideLinks[data-v-04f241bc]{\r\n        display: none;\n}\n.navbarHidden[data-v-04f241bc]{\r\n        display: initial;\r\n        position: fixed;\r\n        z-index: 150;\n}\n.isLoggedIn[data-v-04f241bc]{\r\n        width:300px;\r\n        font-size:.8rem;\n}\n}\n@media only screen and (max-width:400px){\n.name[data-v-04f241bc]{\r\n        text-overflow: ellipsis;\r\n        white-space: nowrap;\r\n        overflow: hidden;\r\n        max-width:150px;\n}\n}\n@media only screen and (min-width:650px) {\n.navbarHidden[data-v-04f241bc]{\r\n        display: none;\n}\n.hiddenMenu[data-v-04f241bc]{\r\n        display: none;\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8850,7 +8863,7 @@ var render = function() {
                           },
                           [
                             _c("p", { staticClass: "name" }, [
-                              _vm._v("Radu Grozav")
+                              _vm._v(" " + _vm._s(this.getUserName))
                             ]),
                             _vm._v(" "),
                             _c(
@@ -8872,25 +8885,33 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _vm.getAfterLoginNotification === true
-                ? _c("div", { key: "2", staticClass: "isLoggedIn" }, [
-                    _c("p", [
-                      _vm._v("Welcome, "),
-                      _c("span", { staticClass: "spaceWelcomeTagAndName" }, [
-                        _vm._v("Radu Grozav ")
+                ? _c(
+                    "div",
+                    { key: "2", staticClass: "isLoggedIn welcomeTag" },
+                    [
+                      _c("p", [
+                        _vm._v("Welcome, "),
+                        _c("span", { staticClass: "spaceWelcomeTagAndName" }, [
+                          _vm._v(_vm._s(this.getUserName) + " ")
+                        ])
                       ])
-                    ])
-                  ])
+                    ]
+                  )
                 : _vm._e(),
               _vm._v(" "),
               _vm.getAfterLogOutNotification === true
-                ? _c("div", { key: "3", staticClass: "isLoggedIn" }, [
-                    _c("p", [
-                      _vm._v("See You Later, "),
-                      _c("span", { staticClass: "spaceWelcomeTagAndName" }, [
-                        _vm._v("Radu Grozav ")
+                ? _c(
+                    "div",
+                    { key: "3", staticClass: "isLoggedIn welcomeTag" },
+                    [
+                      _c("p", [
+                        _vm._v("See You Later, "),
+                        _c("span", { staticClass: "spaceWelcomeTagAndName" }, [
+                          _vm._v(_vm._s(this.getUserName) + " ")
+                        ])
                       ])
-                    ])
-                  ])
+                    ]
+                  )
                 : _vm._e()
             ])
           ],

@@ -31,15 +31,15 @@
                                     <p><router-link to="/register">Register</router-link></p>
                                 </div>
                                 <div class="isLoggedInOrOut isLoggedIn" :key="'2'" v-if="isLogged" >
-                                    <p class="name">Radu Grozav</p>
+                                    <p class="name"> {{this.getUserName}}</p>
                                     <p  class="loginLogoutPointer logout" @click="logout()" >Log Out</p>
                                 </div>
                             </div>
-                            <div  class="isLoggedIn" v-if="getAfterLoginNotification === true" :key="'2'" >
-                                <p>Welcome, <span class="spaceWelcomeTagAndName">Radu Grozav </span></p>
+                            <div  class="isLoggedIn welcomeTag" v-if="getAfterLoginNotification === true" :key="'2'" >
+                                <p>Welcome, <span class="spaceWelcomeTagAndName">{{this.getUserName}} </span></p>
                             </div>
-                            <div  class="isLoggedIn" v-if="getAfterLogOutNotification === true" :key="'3'" >
-                                <p>See You Later, <span class="spaceWelcomeTagAndName">Radu Grozav </span></p>
+                            <div  class="isLoggedIn welcomeTag" v-if="getAfterLogOutNotification === true" :key="'3'" >
+                                <p>See You Later, <span class="spaceWelcomeTagAndName">{{this.getUserName}} </span></p>
                             </div>
                     </transition>
                 </div>
@@ -60,6 +60,9 @@ export default {
         Spinner
     },
     computed:{
+        getUserName(){
+            return this.$store.getters.getUserName.split(' ').map( (el, index, map) => el.charAt(0).toUpperCase() + el.slice(1)).join(' ');
+        },
         isLogged(){
             return this.$store.getters.getIsLogged;
         },
@@ -88,27 +91,37 @@ export default {
         closeMenu(){
             this.hiddenMenu = false;
         }
+    },
+    mounted(){
+        console.log(this.getUserName);
     }
 }
 </script>
 
 <style scoped>
+
+.enoughSpaceForName{
+    width:400px;
+}
 .routeLinksStyling{
     display: flex;
     justify-content: flex-start;
     width:100%;
     align-items: center;
+    margin-left: 10%;
 }
 .spaceWelcomeTagAndName{
     margin-left:10px;
-}
-.spaceGoodByeTagAndName{
-
 }
 .isLoggedIn{
     color:#488b8f;
     width:350px;
     text-align: center;
+    margin-right:100px;
+}
+.welcomeTag{
+    font-size:.8rem;
+    margin-right:100px;
 }
 
 .hideWelcome{
@@ -185,7 +198,7 @@ export default {
     top:0;
 }
 ul{
-    position: absolute;
+    position: relative;
     left:30px;
     width: 40px;  height: 40px;
     border-radius: 20px;
@@ -249,6 +262,15 @@ a {
     position: relative;
     color:#52616b;
 }
+.isLoggedIn>p {
+    display: inline-block;
+    padding: 15px 0;
+    position: relative;
+    color:#52616b;
+}
+.isLoggedIn{
+    margin-right: 110px;
+}
 a:after{
     background: none repeat scroll 0 0 transparent;
     bottom: 0;
@@ -274,9 +296,13 @@ a:hover:after {
     justify-content: space-evenly;
 }
 .name{
-    padding:15px 20px;
+    padding:15px 0;
     position: relative;
     color:#52616b;
+    max-width:200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .logout{
     padding:15px 20px;
@@ -301,7 +327,7 @@ a:hover:after {
     left: 0; 
 }
 .lista{
-    width:800px;
+    width:100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -326,17 +352,20 @@ a:hover:after {
     opacity: 0;
     background:transparent;
 }
-@media only screen and (max-width:1300px) {
-    .lista{
-        width:70%;
+@media only screen and (max-width:1100px){
+    .isLoggedIn{
+        margin-right: 0;
+    }
+    .routeLinksStyling{
+        margin-left: 30px;
     }
 }
 @media only screen and (max-width:900px) {
-    .lista{
-        width:100%;
+    p>.hideLinks{
+        padding:15px 10px;
     }
 }
-@media only screen and (max-width:650px) {
+@media only screen and (max-width:690px) {
     .lista{
         width:100%;
     }
@@ -348,6 +377,18 @@ a:hover:after {
         position: fixed;
         z-index: 150;
     }
+    .isLoggedIn{
+        width:300px;
+        font-size:.8rem;
+    }
+}
+@media only screen and (max-width:400px){
+    .name{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width:150px;
+    }
 }
 @media only screen and (min-width:650px) {
     .navbarHidden{
@@ -356,5 +397,6 @@ a:hover:after {
     .hiddenMenu{
         display: none;
     }
+    
 }
 </style>
