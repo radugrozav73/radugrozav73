@@ -19,11 +19,11 @@
                 <form class="wrappper" @sucmit.prevent > 
                     <div class="data">
                         <label>Email</label>
-                        <input v-model="user.email" type="email" required>
+                        <input @keyup.enter="goPassword()" v-model="user.email" type="email" required>
                     </div>
                     <div class="data">
                         <label>Password</label>
-                        <input v-model="user.password" type="password" required>
+                        <input @keyup.enter="userLogin()" ref="password" v-model="user.password" type="password" required>
                     </div>
                     <div class="buttonPositionings">
                         <button class="loginButton" type="button" @click="userLogin()">Log In</button>
@@ -66,6 +66,11 @@ export default {
     methods:{
         userLogin(){
             return this.$store.dispatch({type:'userLogin', user:this.user}).then( () => this.$router.push('/'));
+        },
+        goPassword(){
+            this.$nextTick( () => {
+                this.$refs.password.focus();
+            })
         }
     }
 }

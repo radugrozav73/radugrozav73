@@ -42,7 +42,14 @@ class AuthController extends Controller
                 'name' => $request['name'],
                 'password' => Hash::make($request['password'])
             ]);
-            return response('Successfully logged in', 201);
+
+            $token = Auth::attempt($request->only('email', 'password'));
+            return response([
+                'token'=>$token,
+                'name' => $request->user()->name,
+                'surveys'=>$request->user()->surveys()->select('title', 'about', 'survey_key', 'list_of_questions')->get(),
+            ],201);
+
         } catch (QueryException $e){
             abort(500);
         }

@@ -58,7 +58,6 @@ const actions = {
                     state.logRegSpinner = false;
                 }).catch(er => {
                     state.logRegSpinner = false;
-                    console.log(er);
                     if(er.response.status === 500){
                         state.serverRequeestError = true;
                         setTimeout(() => {
@@ -154,7 +153,6 @@ const actions = {
             axios
             .post("/api/user/login", payload.user)
             .then(res =>{
-                
                     state.afterLoginNotification = true;
                     res.data.surveys.map( el => state.questiosFromDB.push({el:el, copied:false}));
                     setTimeout(() => {
@@ -164,10 +162,8 @@ const actions = {
                     state.userName = res.data.name;
                     state.logRegSpinner = false;
                     state.isLogged = true;
-                    console.log(res.status);
                     resolve(true);
                 }).catch( er => {
-                    console.log(er);
                         state.logRegSpinner = false;
                         if(er.response.status === 500){
                             state.serverRequeestError = true;
@@ -188,11 +184,11 @@ const actions = {
         state.logRegSpinner = true;
         return new Promise((resolve, reject) => {
             axios
-                .post("/api/user/register", payload.user).then( () =>{ 
+                .post("/api/user/register", payload.user).then( res =>{ 
                     state.logRegSpinner = false;
+                    console.log(res.data.token);
                     resolve('/');
                 }).catch( er => {
-                    console.log(er);
                         state.logRegSpinner = false;
                         if(er.response.status === 500){
                             state.serverRequeestError = true;

@@ -50,15 +50,11 @@ export default {
                 this.$store.dispatch({type:'saveSurveyToDatabase'}).then( res => {
                     this.sendingData = false;
                     setTimeout( () => {
-                        this.notify = true;
-                        setTimeout(() => {
-                            this.notify = false;
-                        }, 2000)
                         setTimeout( () => {
                             this.$store.commit({type:'resetList'});
                             this.$router.push('/list/surveys');
                         },)
-                    }, 1000)
+                    }, 500)
                     })
             }
         },

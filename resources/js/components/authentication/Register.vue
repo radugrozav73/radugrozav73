@@ -18,15 +18,15 @@
             <form class="wrappper" @sucmit.prevent >
                 <div class="data">
                     <label>Full Name:</label>
-                    <input v-model="user.name" required type="text" placeholder="Your Name">
+                    <input @keyup.enter="goMail()" v-model="user.name" required type="text" placeholder="Your Name">
                 </div>
                 <div class="data">
                     <label>Email Address:</label>
-                    <input v-model="user.email" required type="email" placeholder="Your Email">
+                    <input ref="mail" @keyup.enter="goPassword()" v-model="user.email" required type="email" placeholder="Your Email">
                 </div>
                 <div class="data">
                     <label>Password:</label>
-                    <input v-model="user.password" required type="password" placeholder="Your Email">
+                    <input ref="password" @keyup.enter="registerUSer()" v-model="user.password" required type="password" placeholder="Your Email">
                 </div>
                 <div class="buttonPositionings">
                     <button class="loginButton" type="button" @click="registerUSer()">Register</button>
@@ -47,8 +47,7 @@ export default {
                 email:'',
                 password:'',
                 name:''
-            },
-            hasLogged:false
+            }
         }
     },
     components:{
@@ -69,12 +68,21 @@ export default {
         }
     },
     methods:{
+        goMail(){
+            this.$nextTick ( () => {
+                this.$refs.mail.focus();
+            })
+        },
+        goPassword(){
+            this.$nextTick ( () => {
+                this.$refs.password.focus();
+            })
+        },
         registerUSer(){
             return this.$store.dispatch({type:'userRegister', user:this.user}).then( () =>  {
-                this.hasLogged = true;
                 setTimeout(() => {
-                    this.hasLogged = false;
-                }, 3000)
+                    this.$router.push('/list/surveys');
+                }, 500)
             });
         }
     }
